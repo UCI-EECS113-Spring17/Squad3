@@ -1,6 +1,6 @@
 # Squad3
 
-Members:
-Tam Nguyen :)
-William Hu :)
+Members: <br />
+Tam Nguyen :)  <br />
+William Hu :)  <br />
 Edgar Prieto :)
