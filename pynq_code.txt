@@ -1,0 +1,77 @@
+from pynq import Overlay
+Overlay("base.bit").download()
+
+from pynq.iop import Arduino_Analog
+from pynq.iop import ARDUINO
+from pynq.iop import ARDUINO_GROVE_A1
+
+analog1 = Arduino_Analog(ARDUINO,ARDUINO_GROVE_A1)
+
+import time
+#from pynq.iop import Arduino_IO
+from pynq.iop import Pmod_IO
+
+p0 = Pmod_IO(2, 0, 'in')
+p1 = Pmod_IO(2, 1, 'in')
+p2 = Pmod_IO(2, 2, 'in')
+p3 = Pmod_IO(2, 3, 'in')
+p4 = Pmod_IO(2, 4, 'in')
+pm0 = Pmod_IO(1, 0, 'out')
+pm1 = Pmod_IO(1, 1, 'out')
+pm2 = Pmod_IO(1, 2, 'out')
+pm3 = Pmod_IO(1, 3, 'out')
+pm4 = Pmod_IO(1, 4, 'out')
+pm5 = Pmod_IO(1, 5, 'out')
+
+time.sleep(5)
+analog1 = Arduino_Analog(ARDUINO, ARDUINO_GROVE_A1)
+
+time.sleep(0.249)
+counter = 0
+sonar = 0
+
+while(counter<100):
+    if(p0.read() == 1 and sonar == 0):
+        #print('forward')
+        pm4.write(1)
+        pm5.write(1)
+        pm0.write(0)
+        pm1.write(1)
+        pm2.write(0)
+        pm3.write(1) 
+        #counter+=1
+    if(p1.read() == 1):
+        #print('right')
+        pm4.write(0)
+        pm5.write(1)
+        pm2.write(0)
+        pm3.write(1)
+        #counter+=1
+    if(p2.read() == 1):
+        #print('backward')
+        pm4.write(1)
+        pm5.write(1)
+        pm0.write(1)
+        pm1.write(0)
+        pm2.write(1)
+        pm3.write(0)
+        #counter+=1
+    if(p3.read() == 1):
+        #print('left')
+        pm4.write(1)    
+        pm5.write(0)
+        pm0.write(0)
+        pm1.write(1)
+        #counter+=1
+    if(p4.read() == 1):
+        #print('brake')
+        pm4.write(0)
+        pm5.write(0)
+    if(analog1.read_raw()[1] < 550 and sonar == 0):
+        pm4.write(0)
+        pm5.write(0)
+        sonar = 1
+    if(analog1.read_raw()[1] > 550):
+        sonar = 0
+        
+print('done')

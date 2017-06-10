@@ -1,0 +1,49 @@
+#define out0 4
+#define out1 5
+#define out2 6
+#define out3 7
+#define out4 8
+char command;
+
+void setup(){
+  pinMode(out0, OUTPUT);
+  pinMode(out1, OUTPUT);
+  pinMode(out2, OUTPUT);
+  pinMode(out3, OUTPUT);
+  pinMode(out4, OUTPUT);
+  Serial.begin(115200);
+}
+
+void loop(){
+  if(Serial.available()>0){
+    command = (char)Serial.read();
+
+    switch(command){
+      case 'a':
+        digitalWrite(out0, HIGH);
+        delay(3);
+        digitalWrite(out0, LOW);
+        break;
+      case 'b':
+        digitalWrite(out1, HIGH);
+        delay(3);
+        digitalWrite(out1, LOW);
+        break;
+      case 'c':
+        digitalWrite(out2, HIGH);
+        delay(3);
+        digitalWrite(out2, LOW);
+        break;
+      case 'd':
+        digitalWrite(out3, HIGH);
+        delay(3);
+        digitalWrite(out3, LOW);
+        break;
+      case 'e':
+        digitalWrite(out4, HIGH);
+        delay(3);
+        digitalWrite(out4, LOW);
+        break;
+    }
+  }
+}
